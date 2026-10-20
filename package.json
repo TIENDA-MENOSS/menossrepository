@@ -1,0 +1,23 @@
+{
+  "name": "menossrepository",
+  "version": "1.0.0",
+  "description": "Proyecto de tienda virtual desarrollado con Java y Spring Boot.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TIENDA-MENOSS/menossrepository.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TIENDA-MENOSS/menossrepository/issues"
+  },
+  "homepage": "https://github.com/TIENDA-MENOSS/menossrepository#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5"
+  }
+}
