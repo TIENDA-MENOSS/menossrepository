@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Pedido confirmado | MENOSS</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+header {
+    background: white;
+    padding: 15px 8%;
+}
+
+header img {
+    width: 145px;
+}
+
+.contenedor {
+    max-width: 650px;
+    background: white;
+    margin: 55px auto;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px #00000012;
+}
+
+.icono {
+    font-size: 65px;
+    text-align: center;
+}
+
+h1 {
+    color: #e30613;
+    text-align: center;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #666;
+}
+
+.dato {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.resumen {
+    background: #f5f5f5;
+    padding: 18px;
+    border-radius: 9px;
+    margin-top: 20px;
+    overflow-wrap: anywhere;
+}
+
+.boton {
+    display: block;
+    background: #e30613;
+    color: white;
+    padding: 14px;
+    text-decoration: none;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="/">
+        <img src="/img/logo.png" alt="MENOSS">
+    </a>
+</header>
+
+<main class="contenedor">
+
+    <div class="icono">✅</div>
+
+    <h1>¡Pedido confirmado!</h1>
+
+    <p class="subtitulo">
+        Tu solicitud de compra se registró
+        para esta demostración.
+    </p>
+
+    <div class="dato">
+        <strong>Código:</strong>
+        <span id="codigo"
+              th:text="${codigo}"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Cliente:</strong>
+        <span th:text="${nombre}"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Dirección:</strong>
+        <span th:text="${direccion}"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Distrito:</strong>
+        <span th:text="${distrito}"></span>
+    </div>
+
+    <div class="dato">
+        <strong>Teléfono:</strong>
+        <span th:text="${telefono}"></span>
+    </div>
+
+    <div class="resumen">
+        <h3>Productos comprados</h3>
+        <p th:text="${resumen}"></p>
+    </div>
+
+    <a href="/" class="boton">
+        Volver a MENOSS
+    </a>
+
+</main>
+
+<script>
+// Limpiar el carrito después de mostrar la confirmación.
+localStorage.removeItem("menossCarrito");
+</script>
+
+</body>
+</html>

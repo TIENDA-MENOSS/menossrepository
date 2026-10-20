@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Mi carrito | MENOSS</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #252525;
+}
+
+header {
+    background: white;
+    padding: 15px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px #00000015;
+}
+
+header img {
+    width: 145px;
+}
+
+header a {
+    color: #e30613;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #e30613;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #00000012;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 17px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background: #e30613;
+    color: white;
+}
+
+input[type="number"] {
+    width: 75px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+}
+
+button {
+    border: none;
+    padding: 11px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.eliminar {
+    background: #e30613;
+    color: white;
+}
+
+.resumen {
+    background: white;
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: right;
+    box-shadow: 0 3px 12px #00000012;
+}
+
+.total {
+    color: #e30613;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.confirmar {
+    background: #e30613;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 14px 25px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.vacio {
+    text-align: center;
+    background: white;
+    padding: 45px;
+    border-radius: 12px;
+}
+
+.mensaje {
+    color: #b80010;
+    margin-top: 15px;
+}
+
+@media(max-width: 600px) {
+    th, td {
+        padding: 10px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="/">
+        <img src="/img/logo.png" alt="MENOSS">
+    </a>
+
+    <a href="/">← Seguir comprando</a>
+</header>
+
+<main>
+
+    <h1>🛒 Mi carrito de compras</h1>
+
+    <div id="carritoVacio" class="vacio" hidden>
+        <h2>Tu carrito está vacío</h2>
+        <p>Agrega productos desde nuestro catálogo.</p>
+        <a href="/">Ver productos</a>
+    </div>
+
+    <div id="contenidoCarrito">
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaCarrito"></tbody>
+            </table>
+        </div>
+
+        <div class="resumen">
+            <h2>Total de compra</h2>
+
+            <p id="totalCarrito" class="total">
+                S/ 0.00
+            </p>
+
+            <p id="mensaje" class="mensaje"
+               role="alert"></p>
+
+            <a href="/pedido" class="confirmar">
+                Continuar con mi pedido
+            </a>
+        </div>
+    </div>
+
+</main>
+
+<script>
+
+// PRODUCTOS DEL CATALOGO MENOSS
+// Mantener los mismos ID y precios del index.html.
+
+const productos = [
+    {id: 1, nombre: "Arroz 1 kg", precio: 4.50},
+    {id: 2, nombre: "Aceite vegetal 1 L", precio: 8.90},
+    {id: 3, nombre: "Leche evaporada", precio: 4.20},
+    {id: 4, nombre: "Fideos 500 g", precio: 3.50},
+    {id: 5, nombre: "Jabón de tocador", precio: 2.50},
+    {id: 6, nombre: "Pasta dental", precio: 5.90},
+    {id: 7, nombre: "Detergente 1 kg", precio: 9.50},
+    {id: 8, nombre: "Lavavajillas", precio: 4.90},
+    {id: 9, nombre: "Limpiador multiusos", precio: 7.50}
+];
+
+function obtenerCarrito() {
+    try {
+        const datos = JSON.parse(
+            localStorage.getItem("menossCarrito") || "[]"
+        );
+
+        return Array.isArray(datos) ? datos : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function guardarCarrito(carrito) {
+    localStorage.setItem(
+        "menossCarrito",
+        JSON.stringify(carrito)
+    );
+}
+
+function mostrarCarrito() {
+    const carrito = obtenerCarrito();
+
+    const lista = document.getElementById("listaCarrito");
+    const vacio = document.getElementById("carritoVacio");
+    const contenido = document.getElementById("contenidoCarrito");
+
+    lista.innerHTML = "";
+
+    if (carrito.length === 0) {
+        vacio.hidden = false;
+        contenido.hidden = true;
+        return;
+    }
+
+    vacio.hidden = true;
+    contenido.hidden = false;
+
+    let total = 0;
+
+    carrito.forEach(item => {
+        const producto = productos.find(
+            p => p.id === item.id
+        );
+
+        if (!producto) return;
+
+        const subtotal = producto.precio * item.cantidad;
+        total += subtotal;
+
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td>${producto.nombre}</td>
+            <td>S/ ${producto.precio.toFixed(2)}</td>
+
+            <td>
+                <input
+                    type="number"
+                    id="cantidad-${item.id}"
+                    min="1"
+                    value="${item.cantidad}"
+                    aria-label="Cantidad de ${producto.nombre}">
+            </td>
+
+            <td id="subtotal-${item.id}">
+                S/ ${subtotal.toFixed(2)}
+            </td>
+
+            <td>
+                <button
+                    class="eliminar"
+                    id="eliminar-${item.id}">
+                    Eliminar
+                </button>
+            </td>
+        `;
+
+        lista.appendChild(fila);
+
+        fila.querySelector(
+            `#cantidad-${item.id}`
+        ).addEventListener("change", e => {
+            actualizarCantidad(item.id, e.target.value);
+        });
+
+        fila.querySelector(
+            `#eliminar-${item.id}`
+        ).addEventListener("click", () => {
+            eliminarProducto(item.id);
+        });
+    });
+
+    document.getElementById(
+        "totalCarrito"
+    ).textContent = "S/ " + total.toFixed(2);
+}
+
+function actualizarCantidad(id, valor) {
+    const cantidad = Number(valor);
+
+    if (!Number.isInteger(cantidad) || cantidad < 1) {
+        document.getElementById("mensaje").textContent =
+            "La cantidad debe ser mayor a 0";
+
+        mostrarCarrito();
+        return;
+    }
+
+    const carrito = obtenerCarrito();
+    const producto = carrito.find(p => p.id === id);
+
+    if (producto) {
+        producto.cantidad = cantidad;
+        guardarCarrito(carrito);
+    }
+
+    document.getElementById("mensaje").textContent = "";
+    mostrarCarrito();
+}
+
+function eliminarProducto(id) {
+    const carrito = obtenerCarrito().filter(
+        p => p.id !== id
+    );
+
+    guardarCarrito(carrito);
+    mostrarCarrito();
+}
+
+mostrarCarrito();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,829 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>MENOSS | Tu tienda virtual</title>
+
+<style>
+    
+nav span {
+    color: #333;
+    font-weight: bold;
+}
+
+nav form button {
+    background: #e30613;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+nav form button:hover {
+    background: #b80010;
+}
+
+:root {
+    --rojo: #e30613;
+    --rojo-oscuro: #b80010;
+    --fondo: #f5f5f5;
+    --texto: #252525;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+}
+
+
+header {
+    background: white;
+    padding: 12px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px #00000015;
+}
+
+.logo img {
+    width: 155px;
+    height: auto;
+    display: block;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: var(--rojo);
+}
+
+.carrito-link {
+    background: var(--rojo);
+    color: white !important;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+
+.hero {
+    background: linear-gradient(
+        120deg,
+        #e30613,
+        #a80010
+    );
+    color: white;
+    text-align: center;
+    padding: 65px 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.boton {
+    display: inline-block;
+    background: white;
+    color: var(--rojo);
+    padding: 14px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.boton:hover {
+    background: #ffe5e5;
+}
+
+/* CONTENIDO */
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+h2 {
+    margin-bottom: 25px;
+}
+
+.titulo {
+    text-align: center;
+    color: var(--rojo);
+}
+
+
+
+.categorias {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin-bottom: 45px;
+}
+
+.categoria-card {
+    background: white;
+    border-radius: 12px;
+    text-align: center;
+    padding: 25px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: 0 3px 10px #00000012;
+    transition: 0.2s;
+}
+
+.categoria-card:hover {
+    border-color: var(--rojo);
+    transform: translateY(-3px);
+}
+
+.categoria-card span {
+    font-size: 55px;
+}
+
+.categoria-card h3 {
+    margin-bottom: 0;
+}
+
+
+.buscador {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+input, select {
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+#buscar {
+    flex: 1;
+    min-width: 200px;
+}
+
+select {
+    min-width: 170px;
+}
+
+
+.productos {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+    gap: 22px;
+}
+
+.producto {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 3px 12px #00000012;
+    transition: 0.2s;
+}
+
+.producto:hover {
+    transform: translateY(-4px);
+}
+
+.producto-imagen {
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+    background: #fafafa;
+    border-radius: 10px;
+}
+
+.producto h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.producto p {
+    color: #666;
+}
+
+.precio {
+    color: var(--rojo) !important;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    border-radius: 7px;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.agregar {
+    background: var(--rojo);
+    color: white;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.agregar:hover {
+    background: var(--rojo-oscuro);
+}
+
+.detalle-btn {
+    background: #eeeeee;
+    color: #333;
+    width: 100%;
+}
+
+.detalle-btn:hover {
+    background: #dddddd;
+}
+
+
+.mensaje {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #222;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 10px;
+    z-index: 10;
+    box-shadow: 0 3px 12px #00000030;
+}
+
+
+dialog {
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    width: min(90%, 420px);
+    text-align: center;
+}
+
+dialog::backdrop {
+    background: #00000080;
+}
+
+#detalleImagen {
+    font-size: 80px;
+}
+
+.cerrar {
+    background: #444;
+    color: white;
+    margin-top: 15px;
+}
+
+
+footer {
+    background: #252525;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+    margin-top: 40px;
+}
+
+footer h2 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #cccccc;
+}
+
+
+@media(max-width: 700px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero {
+        padding: 45px 20px;
+    }
+
+    .productos {
+        grid-template-columns:
+            repeat(auto-fit, minmax(160px, 1fr));
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<header>
+
+    <a href="/" class="logo">
+        <img src="/img/logo.png"
+             alt="Logo de MENOSS">
+    </a>
+
+    
+<nav>
+    <a href="/">Inicio</a>
+    <a href="#categorias">Categorías</a>
+    <a href="#catalogo">Productos</a>
+
+    <!-- USUARIO NO AUTENTICADO -->
+    <th:block th:if="${usuarioNombre == null}">
+        <a href="http://localhost:8080/registro">Registrarse</a>
+        <a href="http://localhost:8080/login">Iniciar sesión</a>
+    </th:block>
+
+    <!-- USUARIO AUTENTICADO -->
+    <th:block th:if="${usuarioNombre != null}">
+        <span th:text="'Hola, ' + ${usuarioNombre}">
+            Hola, usuario
+        </span>
+
+        <form action="/logout"
+              method="post"
+              style="display:inline; margin:0;">
+            <button type="submit" id="cerrarSesion">
+                Cerrar sesión
+            </button>
+        </form>
+    </th:block>
+
+    <a href="/carrito" class="carrito-link">
+        🛒 Carrito
+        (<span id="cantidadCarrito">0</span>)
+    </a>
+</nav>
+
+
+</header>
+
+
+<section class="hero">
+
+    <h1>¡Compra más, paga MENOSS!</h1>
+
+    <p>
+        Productos de primera necesidad
+        al mejor alcance para tu hogar.
+    </p>
+
+    <a href="#catalogo" class="boton">
+        Ver productos
+    </a>
+
+</section>
+
+<main>
+
+
+<section id="categorias">
+
+    <h2 class="titulo">
+        Nuestras categorías
+    </h2>
+
+    <div class="categorias">
+
+        <div class="categoria-card"
+             onclick="filtrarCategoria('Alimentos')">
+            <span>🍚</span>
+            <h3>Alimentos</h3>
+        </div>
+
+        <div class="categoria-card"
+             onclick="filtrarCategoria('Higiene')">
+            <span>🧼</span>
+            <h3>Higiene personal</h3>
+        </div>
+
+        <div class="categoria-card"
+             onclick="filtrarCategoria('Limpieza')">
+            <span>🧹</span>
+            <h3>Limpieza</h3>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="catalogo">
+
+    <h2 class="titulo">
+        Nuestros productos
+    </h2>
+
+    <div class="buscador">
+
+        <input
+            type="search"
+            id="buscar"
+            placeholder="🔍 Buscar productos..."
+            aria-label="Buscar productos">
+
+        <select id="categoria"
+                aria-label="Filtrar productos">
+
+            <option value="Todos">
+                Todas las categorías
+            </option>
+
+            <option value="Alimentos">
+                Alimentos
+            </option>
+
+            <option value="Higiene">
+                Higiene
+            </option>
+
+            <option value="Limpieza">
+                Limpieza
+            </option>
+
+        </select>
+
+    </div>
+
+    <div id="listaProductos"
+         class="productos">
+    </div>
+
+    <p id="sinResultados"
+       style="text-align:center"
+       hidden>
+        No se encontraron productos.
+    </p>
+
+</section>
+
+</main>
+
+
+<dialog id="detalle">
+
+    <div id="detalleImagen"></div>
+
+    <h2 id="detalleNombre"></h2>
+
+    <p id="detalleDescripcion"></p>
+
+    <p id="detalleCategoria"></p>
+
+    <p id="detallePrecio" class="precio"></p>
+
+    <button class="cerrar"
+            id="cerrarDetalle">
+        Cerrar
+    </button>
+
+</dialog>
+
+
+<div id="mensaje"
+     class="mensaje"
+     role="status"
+     hidden>
+</div>
+
+
+<footer>
+
+    <h2>MENOSS</h2>
+
+    <p>
+        Tu tienda virtual de confianza.
+    </p>
+
+    <p>
+        Alimentos, higiene y limpieza
+        al alcance de todos.
+    </p>
+
+    <p>
+        Proyecto académico - ODS 10
+    </p>
+
+    <p>
+        © 2026 MENOSS
+    </p>
+
+</footer>
+
+<script>
+
+
+const productos = [
+    {
+        id: 1,
+        nombre: "Arroz 1 kg",
+        categoria: "Alimentos",
+        precio: 4.50,
+        imagen: "🍚",
+        descripcion: "Arroz de calidad para el hogar."
+    },
+    {
+        id: 2,
+        nombre: "Aceite vegetal 1 L",
+        categoria: "Alimentos",
+        precio: 8.90,
+        imagen: "🫗",
+        descripcion: "Aceite vegetal para cocinar."
+    },
+    {
+        id: 3,
+        nombre: "Leche evaporada",
+        categoria: "Alimentos",
+        precio: 4.20,
+        imagen: "🥛",
+        descripcion: "Leche evaporada para consumo familiar."
+    },
+    {
+        id: 4,
+        nombre: "Fideos 500 g",
+        categoria: "Alimentos",
+        precio: 3.50,
+        imagen: "🍝",
+        descripcion: "Fideos para preparar comidas."
+    },
+    {
+        id: 5,
+        nombre: "Jabón de tocador",
+        categoria: "Higiene",
+        precio: 2.50,
+        imagen: "🧼",
+        descripcion: "Jabón para higiene personal."
+    },
+    {
+        id: 6,
+        nombre: "Pasta dental",
+        categoria: "Higiene",
+        precio: 5.90,
+        imagen: "🪥",
+        descripcion: "Pasta dental de uso diario."
+    },
+    {
+        id: 7,
+        nombre: "Detergente 1 kg",
+        categoria: "Limpieza",
+        precio: 9.50,
+        imagen: "🧺",
+        descripcion: "Detergente para lavar ropa."
+    },
+    {
+        id: 8,
+        nombre: "Lavavajillas",
+        categoria: "Limpieza",
+        precio: 4.90,
+        imagen: "🧽",
+        descripcion: "Producto para limpiar utensilios."
+    },
+    {
+        id: 9,
+        nombre: "Limpiador multiusos",
+        categoria: "Limpieza",
+        precio: 7.50,
+        imagen: "🧹",
+        descripcion: "Limpiador para superficies."
+    }
+];
+
+
+const lista = document.getElementById("listaProductos");
+const buscar = document.getElementById("buscar");
+const categoria = document.getElementById("categoria");
+
+
+function obtenerCarrito() {
+    try {
+        const datos = JSON.parse(
+            localStorage.getItem("menossCarrito") || "[]"
+        );
+        return Array.isArray(datos) ? datos : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function actualizarContador() {
+    const carrito = obtenerCarrito();
+
+    const total = carrito.reduce(
+        (suma, item) => suma + item.cantidad, 0
+    );
+
+    document.getElementById(
+        "cantidadCarrito"
+    ).textContent = total;
+}
+
+function agregarCarrito(id) {
+    const carrito = obtenerCarrito();
+
+    const producto = carrito.find(
+        item => item.id === id
+    );
+
+    if (producto) {
+        producto.cantidad++;
+    } else {
+        carrito.push({
+            id: id,
+            cantidad: 1
+        });
+    }
+
+    localStorage.setItem(
+        "menossCarrito",
+        JSON.stringify(carrito)
+    );
+
+    actualizarContador();
+
+    mostrarMensaje("Producto agregado al carrito");
+}
+
+
+let temporizadorMensaje;
+
+function mostrarMensaje(texto) {
+    const mensaje = document.getElementById("mensaje");
+
+    mensaje.textContent = texto;
+    mensaje.hidden = false;
+
+    clearTimeout(temporizadorMensaje);
+
+    temporizadorMensaje = setTimeout(() => {
+        mensaje.hidden = true;
+    }, 2500);
+}
+
+function mostrarProductos() {
+    const texto = buscar.value.trim().toLowerCase();
+    const filtro = categoria.value;
+
+    const filtrados = productos.filter(p => {
+        const coincideNombre =
+            p.nombre.toLowerCase().includes(texto);
+
+        const coincideCategoria =
+            filtro === "Todos" ||
+            p.categoria === filtro;
+
+        return coincideNombre && coincideCategoria;
+    });
+
+    lista.innerHTML = filtrados.map(p => `
+        <article class="producto">
+
+            <div class="producto-imagen">
+                ${p.imagen}
+            </div>
+
+            <h3>${p.nombre}</h3>
+
+            <p>${p.categoria}</p>
+
+            <p class="precio">
+                S/ ${p.precio.toFixed(2)}
+            </p>
+
+            <button
+                class="detalle-btn"
+                id="detalle-${p.id}"
+                onclick="verDetalle(${p.id})">
+                Ver detalle
+            </button>
+
+            <button
+                class="agregar"
+                id="agregar-${p.id}"
+                onclick="agregarCarrito(${p.id})">
+                🛒 Agregar al carrito
+            </button>
+
+        </article>
+    `).join("");
+
+    document.getElementById(
+        "sinResultados"
+    ).hidden = filtrados.length !== 0;
+}
+
+
+function filtrarCategoria(nombre) {
+    categoria.value = nombre;
+    buscar.value = "";
+
+    mostrarProductos();
+
+    document.getElementById(
+        "catalogo"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+function verDetalle(id) {
+    const producto = productos.find(
+        p => p.id === id
+    );
+
+    if (!producto) return;
+
+    document.getElementById(
+        "detalleImagen"
+    ).textContent = producto.imagen;
+
+    document.getElementById(
+        "detalleNombre"
+    ).textContent = producto.nombre;
+
+    document.getElementById(
+        "detalleDescripcion"
+    ).textContent = producto.descripcion;
+
+    document.getElementById(
+        "detalleCategoria"
+    ).textContent = producto.categoria;
+
+    document.getElementById(
+        "detallePrecio"
+    ).textContent = "S/ " + producto.precio.toFixed(2);
+
+    document.getElementById(
+        "detalle"
+    ).showModal();
+}
+
+document.getElementById(
+    "cerrarDetalle"
+).addEventListener("click", () => {
+    document.getElementById("detalle").close();
+});
+
+
+buscar.addEventListener(
+    "input",
+    mostrarProductos
+);
+
+categoria.addEventListener(
+    "change",
+    mostrarProductos
+);
+
+// INICIAR
+
+mostrarProductos();
+actualizarContador();
+
+</script>
+
+</body>
+</html>
