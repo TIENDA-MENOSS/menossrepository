@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+  <img
+    src="/logo.png"
+    alt="Logo de MENOSS"
+    height="45"
+    class="me-2"
+  >
+</a>
+
+    <div class="navbar-nav">
+      <a class="nav-link" routerLink="/" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
+        Inicio
+      </a>
+
+      <a class="nav-link" routerLink="/productos" routerLinkActive="active">
+        Productos
+      </a>
+
+      <a class="nav-link" routerLink="/categorias" routerLinkActive="active">
+        Categorías
+      </a>
+
+      <a class="nav-link" routerLink="/clientes" routerLinkActive="active">
+        Clientes
+      </a>
+
+      <a class="nav-link" routerLink="/pedidos" routerLinkActive="active">
+        Pedidos
+      </a>
+    </div>
+  </div>
+</nav>
