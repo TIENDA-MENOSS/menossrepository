@@ -1,10 +1,152 @@
-<section class="py-4">
-  <h2 class="fw-bold text-danger">Productos</h2>
-  <p class="text-muted">
-    Administra los productos disponibles en MENOSS.
-  </p>
-  <hr>
-  <div class="alert alert-light border">
-    Aquí aparecerá el catálogo de productos.
+
+<div class="container mt-4">
+
+  <h2 class="fw-bold text-danger mb-3">Productos MENOSS</h2>
+  <p>Administra los productos esenciales de nuestra tienda.</p>
+
+  @if (mensaje) {
+    <div class="alert alert-success">{{ mensaje }}</div>
+  }
+
+  @if (error) {
+    <div class="alert alert-danger">{{ error }}</div>
+  }
+
+  <!-- FORMULARIO -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-danger text-white fw-bold">
+      {{ idEditando === null ? 'Registrar producto' : 'Editar producto' }}
+    </div>
+
+    <div class="card-body">
+      <form #productoForm="ngForm" (ngSubmit)="guardar()">
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input
+            id="nombre"
+            type="text"
+            class="form-control"
+            name="nombre"
+            [(ngModel)]="formulario.nombre"
+            required
+            minlength="2"
+            #nombre="ngModel">
+
+          @if (nombre.invalid && nombre.touched) {
+            <small class="text-danger">
+              Ingresa un nombre de al menos 2 caracteres.
+            </small>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <textarea
+            id="descripcion"
+            class="form-control"
+            name="descripcion"
+            [(ngModel)]="formulario.descripcion"
+            required
+            #descripcion="ngModel">
+          </textarea>
+
+          @if (descripcion.invalid && descripcion.touched) {
+            <small class="text-danger">
+              La descripción es obligatoria.
+            </small>
+          }
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="precio" class="form-label">Precio (S/)</label>
+            <input
+              id="precio"
+              type="number"
+              class="form-control"
+              name="precio"
+              [(ngModel)]="formulario.precio"
+              min="0.01"
+              step="0.01"
+              required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input
+              id="stock"
+              type="number"
+              class="form-control"
+              name="stock"
+              [(ngModel)]="formulario.stock"
+              min="0"
+              step="1"
+              required>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-danger me-2"
+          [disabled]="productoForm.invalid || guardando">
+          {{ guardando ? 'Guardando...' :
+             (idEditando === null ? 'Registrar producto' : 'Guardar cambios') }}
+        </button>
+
+        @if (idEditando !== null) {
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelar()">
+            Cancelar
+          </button>
+        }
+
+      </form>
+    </div>
   </div>
-</section>
+
+  <!-- LISTA DE PRODUCTOS -->
+  <h4 class="fw-bold mb-3">Productos registrados</h4>
+
+  @if (cargando) {
+    <div class="alert alert-info">Cargando productos...</div>
+  } @else {
+    <div class="row g-4">
+      @for (producto of productos; track producto.id) {
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="fw-bold">{{ producto.nombre }}</h5>
+              <p>{{ producto.descripcion }}</p>
+              <p class="text-danger fw-bold">
+                S/ {{ producto.precio.toFixed(2) }}
+              </p>
+              <p class="text-muted">Stock: {{ producto.stock }}</p>
+
+              <button
+                class="btn btn-outline-primary btn-sm me-2"
+                (click)="editar(producto)">
+                Editar
+              </button>
+
+              <button
+                class="btn btn-outline-danger btn-sm"
+                (click)="eliminar(producto)">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="col-12">
+          <div class="alert alert-warning">
+            No hay productos registrados.
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+</div>

@@ -1,10 +1,156 @@
-<section class="py-4">
-  <h2 class="fw-bold text-danger">Categorías</h2>
-  <p class="text-muted">
-    Organiza los productos de MENOSS por categoría.
-  </p>
-  <hr>
-  <div class="alert alert-light border">
-    Aquí aparecerán las categorías disponibles.
+
+<div class="container mt-4">
+
+  <h2 class="fw-bold text-danger mb-3">
+    Categorías MENOSS
+  </h2>
+
+  <p>Administra las categorías de nuestra tienda.</p>
+
+  <!-- MENSAJES -->
+  @if (mensaje) {
+    <div class="alert alert-success">
+      {{ mensaje }}
+    </div>
+  }
+
+  @if (error) {
+    <div class="alert alert-danger">
+      {{ error }}
+    </div>
+  }
+
+  <!-- FORMULARIO -->
+  <div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-danger text-white fw-bold">
+      {{ idEditando === null ? 'Registrar categoría' : 'Editar categoría' }}
+    </div>
+
+    <div class="card-body">
+
+      <form #categoriaForm="ngForm" (ngSubmit)="guardar()">
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label">
+            Nombre de la categoría
+          </label>
+
+          <input
+            id="nombre"
+            type="text"
+            class="form-control"
+            name="nombre"
+            [(ngModel)]="formulario.nombre"
+            required
+            minlength="2"
+            #nombre="ngModel">
+
+          @if (nombre.invalid && nombre.touched) {
+            <small class="text-danger">
+              Ingresa un nombre de al menos 2 caracteres.
+            </small>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">
+            Descripción
+          </label>
+
+          <textarea
+            id="descripcion"
+            class="form-control"
+            name="descripcion"
+            [(ngModel)]="formulario.descripcion"
+            required
+            #descripcion="ngModel"></textarea>
+
+          @if (descripcion.invalid && descripcion.touched) {
+            <small class="text-danger">
+              La descripción es obligatoria.
+            </small>
+          }
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-danger me-2"
+          [disabled]="categoriaForm.invalid || guardando">
+
+          {{ guardando ? 'Guardando...' :
+            (idEditando === null ? 'Registrar categoría' : 'Guardar cambios') }}
+
+        </button>
+
+        @if (idEditando !== null) {
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelar()">
+            Cancelar
+          </button>
+        }
+
+      </form>
+    </div>
   </div>
-</section>
+
+  <!-- LISTADO -->
+  <h4 class="fw-bold mb-3">
+    Categorías registradas
+  </h4>
+
+  @if (cargando) {
+    <div class="alert alert-info">
+      Cargando categorías...
+    </div>
+  } @else {
+
+    <div class="row g-4">
+
+      @for (categoria of categorias; track categoria.id) {
+
+        <div class="col-md-4">
+
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+
+              <h5 class="fw-bold">
+                {{ categoria.nombre }}
+              </h5>
+
+              <p>{{ categoria.descripcion }}</p>
+
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-sm me-2"
+                (click)="editar(categoria)">
+                Editar
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                (click)="eliminar(categoria)">
+                Eliminar
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      } @empty {
+
+        <div class="col-12">
+          <div class="alert alert-warning">
+            No hay categorías registradas.
+          </div>
+        </div>
+
+      }
+
+    </div>
+  }
+
+</div>

@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,15 +26,23 @@ public class LoginTest {
 
     private final String URL = "http://localhost:8080";
 
+    
     @BeforeEach
-    public void setup() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        public void setup() {
+        ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");
+
+        driver = new ChromeDriver(options);
 
         wait = new WebDriverWait(
-                driver, Duration.ofSeconds(10)
+            driver, Duration.ofSeconds(10)
         );
     }
+
 
     @AfterEach
     public void tearDown() {
